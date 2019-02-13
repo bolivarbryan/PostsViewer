@@ -27,6 +27,7 @@
 		F4356B5322149BB20085EFDA /* JSONPlaceholderAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B5222149BB20085EFDA /* JSONPlaceholderAPI.swift */; };
 		F4356B562214A1110085EFDA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4356B552214A1110085EFDA /* Localizable.strings */; };
 		F4356B582214A11B0085EFDA /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B572214A11B0085EFDA /* Language.swift */; };
+		F4356B5A2214A2120085EFDA /* UIColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B592214A2120085EFDA /* UIColor+Style.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		F4356B5222149BB20085EFDA /* JSONPlaceholderAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPlaceholderAPI.swift; sourceTree = "<group>"; };
 		F4356B552214A1110085EFDA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		F4356B572214A11B0085EFDA /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		F4356B592214A2120085EFDA /* UIColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Style.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			children = (
 				F4356B30221498F90085EFDA /* App */,
 				F4356B2F221498F40085EFDA /* Common */,
+				F4356B5B2214A3370085EFDA /* Extensions */,
 				F4356B1B221498080085EFDA /* Info.plist */,
 				F4356B13221498070085EFDA /* PostsViewer.xcdatamodeld */,
 			);
@@ -263,6 +266,14 @@
 				F4356B572214A11B0085EFDA /* Language.swift */,
 			);
 			path = Language;
+			sourceTree = "<group>";
+		};
+		F4356B5B2214A3370085EFDA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F4356B592214A2120085EFDA /* UIColor+Style.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -428,6 +439,7 @@
 				F4356B582214A11B0085EFDA /* Language.swift in Sources */,
 				F4356B0D221498070085EFDA /* AppDelegate.swift in Sources */,
 				F4356B41221499BA0085EFDA /* PostsListViewController.swift in Sources */,
+				F4356B5A2214A2120085EFDA /* UIColor+Style.swift in Sources */,
 				F4356B4D22149B5F0085EFDA /* UserView.swift in Sources */,
 				F4356B3E221499800085EFDA /* Company.swift in Sources */,
 				F4356B47221499E90085EFDA /* PostTableViewCell.swift in Sources */,

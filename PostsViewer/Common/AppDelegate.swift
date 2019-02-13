@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let vc = PostsListViewController()
         let nc = UINavigationController(rootViewController: vc)
+        nc.navigationBar.isTranslucent = false
+        nc.navigationBar.barTintColor = .customGreen
         window?.rootViewController = nc
         return true
     }
