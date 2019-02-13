@@ -5,3 +5,4 @@
 "comment" = "comment";
 "description" = "description";
 "user" = "user";
+"sent.by" = "Sent by:";

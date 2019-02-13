@@ -8,6 +8,7 @@ enum Language: String {
     case comment = "comment"
     case description = "description"
     case user = "user"
+    case sentBy = "sent.by"
 
     var localized: String {
         return NSLocalizedString(self.rawValue, comment: self.rawValue)

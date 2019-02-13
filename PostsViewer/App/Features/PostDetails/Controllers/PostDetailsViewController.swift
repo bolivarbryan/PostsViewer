@@ -14,6 +14,10 @@ class PostDetailsViewController: UIViewController {
             viewModel.fetchUserDetails(userID: post.userID, completion: {
                 self.tableView?.reloadData()
             })
+
+            viewModel.fetchCommentsFromPost(postID: post.id) {
+                self.tableView?.reloadData()
+            }
         }
     }
 
@@ -42,6 +46,7 @@ extension PostDetailsViewController: UITableViewDataSource {
         case 2:
             let cellIdentifier = CommentTableViewCell.identifier
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CommentTableViewCell
+            cell.comment = viewModel.comments[indexPath.row]
             return cell
         default:
             fatalError("Default cell should not be presented")
@@ -56,7 +61,7 @@ extension PostDetailsViewController: UITableViewDelegate {
         case 0, 1:
             return 1
         default:
-            return 0
+            return viewModel.comments.count
         }
     }
 
@@ -79,5 +84,9 @@ extension PostDetailsViewController: UITableViewDelegate {
         default:
             return nil
         }
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
