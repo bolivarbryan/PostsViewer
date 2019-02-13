@@ -27,6 +27,9 @@ class PostDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let favoriteButton = UIBarButtonItem(image: #imageLiteral(resourceName: "star-off"), style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = favoriteButton
     }
 }
 

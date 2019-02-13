@@ -31,6 +31,9 @@ class PostsListViewController: UIViewController {
         viewModel.fetchPosts()
         title = Language.post.localized.pluralized.capitalized
         view.backgroundColor = .gray250
+
+        let favoriteButton = UIBarButtonItem(image: #imageLiteral(resourceName: "reload"), style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = favoriteButton
     }
 
     func configureUI() {

@@ -34,7 +34,6 @@ class PostDetailsViewModel {
 
                 do {
                     let comments = try JSONDecoder().decode([Comment].self, from: data)
-                    print(comments)
                     self.comments = comments
                     completion()
                 } catch {
