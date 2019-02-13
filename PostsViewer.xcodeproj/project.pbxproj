@@ -22,12 +22,14 @@
 		F4356B44221499D40085EFDA /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B43221499D40085EFDA /* PostDetailsViewController.swift */; };
 		F4356B47221499E90085EFDA /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B46221499E90085EFDA /* PostTableViewCell.swift */; };
 		F4356B4B22149B420085EFDA /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B4A22149B420085EFDA /* CommentTableViewCell.swift */; };
-		F4356B4D22149B5F0085EFDA /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B4C22149B5F0085EFDA /* UserView.swift */; };
 		F4356B5022149B8E0085EFDA /* PostsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B4F22149B8E0085EFDA /* PostsListViewModel.swift */; };
 		F4356B5322149BB20085EFDA /* JSONPlaceholderAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B5222149BB20085EFDA /* JSONPlaceholderAPI.swift */; };
 		F4356B562214A1110085EFDA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4356B552214A1110085EFDA /* Localizable.strings */; };
 		F4356B582214A11B0085EFDA /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B572214A11B0085EFDA /* Language.swift */; };
 		F4356B5A2214A2120085EFDA /* UIColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B592214A2120085EFDA /* UIColor+Style.swift */; };
+		F4356B5D2214B8370085EFDA /* PostDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4356B5C2214B8370085EFDA /* PostDetails.storyboard */; };
+		F4356B5F2214BA070085EFDA /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B5E2214BA070085EFDA /* UserTableViewCell.swift */; };
+		F4356B612214BA130085EFDA /* PostDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B602214BA130085EFDA /* PostDescriptionTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,12 +65,14 @@
 		F4356B43221499D40085EFDA /* PostDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsViewController.swift; sourceTree = "<group>"; };
 		F4356B46221499E90085EFDA /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		F4356B4A22149B420085EFDA /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
-		F4356B4C22149B5F0085EFDA /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		F4356B4F22149B8E0085EFDA /* PostsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListViewModel.swift; sourceTree = "<group>"; };
 		F4356B5222149BB20085EFDA /* JSONPlaceholderAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPlaceholderAPI.swift; sourceTree = "<group>"; };
 		F4356B552214A1110085EFDA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		F4356B572214A11B0085EFDA /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		F4356B592214A2120085EFDA /* UIColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Style.swift"; sourceTree = "<group>"; };
+		F4356B5C2214B8370085EFDA /* PostDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PostDetails.storyboard; sourceTree = "<group>"; };
+		F4356B5E2214BA070085EFDA /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		F4356B602214BA130085EFDA /* PostDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,7 +242,9 @@
 			isa = PBXGroup;
 			children = (
 				F4356B4A22149B420085EFDA /* CommentTableViewCell.swift */,
-				F4356B4C22149B5F0085EFDA /* UserView.swift */,
+				F4356B602214BA130085EFDA /* PostDescriptionTableViewCell.swift */,
+				F4356B5C2214B8370085EFDA /* PostDetails.storyboard */,
+				F4356B5E2214BA070085EFDA /* UserTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -360,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4356B1A221498080085EFDA /* LaunchScreen.storyboard in Resources */,
+				F4356B5D2214B8370085EFDA /* PostDetails.storyboard in Resources */,
 				F4356B562214A1110085EFDA /* Localizable.strings in Resources */,
 				F4356B17221498080085EFDA /* Assets.xcassets in Resources */,
 			);
@@ -434,14 +441,15 @@
 				F4356B4B22149B420085EFDA /* CommentTableViewCell.swift in Sources */,
 				F4356B36221499550085EFDA /* Post.swift in Sources */,
 				F4356B15221498070085EFDA /* PostsViewer.xcdatamodeld in Sources */,
+				F4356B5F2214BA070085EFDA /* UserTableViewCell.swift in Sources */,
 				F4356B3C221499730085EFDA /* User.swift in Sources */,
 				F4356B44221499D40085EFDA /* PostDetailsViewController.swift in Sources */,
 				F4356B582214A11B0085EFDA /* Language.swift in Sources */,
 				F4356B0D221498070085EFDA /* AppDelegate.swift in Sources */,
 				F4356B41221499BA0085EFDA /* PostsListViewController.swift in Sources */,
 				F4356B5A2214A2120085EFDA /* UIColor+Style.swift in Sources */,
-				F4356B4D22149B5F0085EFDA /* UserView.swift in Sources */,
 				F4356B3E221499800085EFDA /* Company.swift in Sources */,
+				F4356B612214BA130085EFDA /* PostDescriptionTableViewCell.swift in Sources */,
 				F4356B47221499E90085EFDA /* PostTableViewCell.swift in Sources */,
 				F4356B5022149B8E0085EFDA /* PostsListViewModel.swift in Sources */,
 				F4356B382214995D0085EFDA /* Comment.swift in Sources */,

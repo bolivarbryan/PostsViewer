@@ -70,6 +70,18 @@ class PostsListViewController: UIViewController {
                                             cell.accessoryType = .disclosureIndicator
             }
             .disposed(by: disposeBag)
+
+        tableView.rx.modelSelected(Post.self).asObservable()
+            .subscribe(onNext: { _ in
+                let storyboard = UIStoryboard(name: "PostDetails", bundle: nil)
+
+                guard
+                    let vc = storyboard.instantiateInitialViewController()
+                    else { return }
+
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+        .disposed(by: disposeBag)
     }
 
 }

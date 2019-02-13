@@ -1,9 +1,64 @@
 import UIKit
 
+// I made this implementation without Rx and Snp just for showing my work style using standard conventions
+
 class PostDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+}
 
+extension PostDetailsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case 0:
+            let cellIdentifier = PostDescriptionTableViewCell.identifier
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! PostDescriptionTableViewCell
+            return cell
+        case 1:
+            let cellIdentifier = UserTableViewCell.identifier
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! UserTableViewCell
+            return cell
+        case 2:
+            let cellIdentifier = CommentTableViewCell.identifier
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CommentTableViewCell
+            return cell
+        default:
+            fatalError("Default cell should not be presented")
+        }
+    }
+}
+
+extension PostDetailsViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0, 1:
+            return 1
+        default:
+            return 0
+        }
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return Language.description.localized.capitalized
+        case 1:
+            return Language.user.localized.capitalized
+        case 2:
+            return Language.comment.localized.pluralized.capitalized
+        default:
+            return nil
+        }
+    }
 }

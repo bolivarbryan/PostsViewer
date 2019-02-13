@@ -1,9 +1,6 @@
 import UIKit
 
 class CommentTableViewCell: UITableViewCell {
+    static let identifier = "CommentTableViewCell"
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 }
