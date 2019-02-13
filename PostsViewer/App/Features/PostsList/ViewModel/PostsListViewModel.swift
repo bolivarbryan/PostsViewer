@@ -24,4 +24,8 @@ class PostListViewModel {
             }
         }
     }
+
+    func deleteAllPosts() {
+        posts.value = []
+    }
 }

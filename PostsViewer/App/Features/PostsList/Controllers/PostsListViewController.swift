@@ -31,9 +31,6 @@ class PostsListViewController: UIViewController {
         viewModel.fetchPosts()
         title = Language.post.localized.pluralized.capitalized
         view.backgroundColor = .gray250
-
-        let favoriteButton = UIBarButtonItem(image: #imageLiteral(resourceName: "reload"), style: .plain, target: self, action: nil)
-        navigationItem.rightBarButtonItem = favoriteButton
     }
 
     func configureUI() {
@@ -44,6 +41,13 @@ class PostsListViewController: UIViewController {
             $0.bottom.right.left.equalToSuperview()
             $0.height.equalTo(80)
         }
+
+        deleteButton.rx.tap.asObservable()
+            .subscribe(onNext: { _ in
+                self.viewModel.deleteAllPosts()
+            })
+            .disposed(by: disposeBag)
+
 
         //Segmented Control
         view.addSubview(segmentedControl)
@@ -64,6 +68,17 @@ class PostsListViewController: UIViewController {
         }
 
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+
+        //Navigation Bar
+        let reloadButton = UIBarButtonItem(image: #imageLiteral(resourceName: "reload"), style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = reloadButton
+
+        reloadButton.rx.tap.asObservable()
+            .subscribe(onNext: { _ in
+                self.viewModel.fetchPosts()
+            })
+            .disposed(by: disposeBag)
+
 
         //Rx Binders
         viewModel.posts.asObservable()
