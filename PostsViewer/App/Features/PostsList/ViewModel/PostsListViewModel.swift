@@ -15,7 +15,7 @@ class PostListViewModel {
 
                 do {
                     let posts = try JSONDecoder().decode([Post].self, from: data)
-                    print(posts)
+                    self.posts.value = posts
                 } catch {
                     print(error.localizedDescription)
                 }
