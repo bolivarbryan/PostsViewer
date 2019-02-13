@@ -13,3 +13,12 @@ enum Language: String {
         return NSLocalizedString(self.rawValue, comment: self.rawValue)
     }
 }
+
+extension String {
+
+    var pluralized: String {
+        //TODO: workaround, Plural rules needed here
+        let s = self.appending("s")
+        return s
+    }
+}

@@ -13,6 +13,7 @@ class PostsListViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         viewModel.fetchPosts()
+        title = Language.post.localized.pluralized.capitalized
     }
 
     func configureUI() {
@@ -26,8 +27,7 @@ class PostsListViewController: UIViewController {
         viewModel.posts.asObservable()
             .bind(to: tableView.rx.items(cellIdentifier: PostTableViewCell.identifier,
                                          cellType: PostTableViewCell.self)) {  row, element, cell in
-                                            cell.textLabel?.text = element.title
-                                            cell.detailTextLabel?.text = element.body
+                                            cell.post.value = element
             }
             .disposed(by: disposeBag)
     }
