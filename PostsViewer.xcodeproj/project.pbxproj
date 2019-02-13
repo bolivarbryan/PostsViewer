@@ -25,6 +25,8 @@
 		F4356B4D22149B5F0085EFDA /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B4C22149B5F0085EFDA /* UserView.swift */; };
 		F4356B5022149B8E0085EFDA /* PostsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B4F22149B8E0085EFDA /* PostsListViewModel.swift */; };
 		F4356B5322149BB20085EFDA /* JSONPlaceholderAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B5222149BB20085EFDA /* JSONPlaceholderAPI.swift */; };
+		F4356B562214A1110085EFDA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4356B552214A1110085EFDA /* Localizable.strings */; };
+		F4356B582214A11B0085EFDA /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B572214A11B0085EFDA /* Language.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		F4356B4C22149B5F0085EFDA /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		F4356B4F22149B8E0085EFDA /* PostsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListViewModel.swift; sourceTree = "<group>"; };
 		F4356B5222149BB20085EFDA /* JSONPlaceholderAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPlaceholderAPI.swift; sourceTree = "<group>"; };
+		F4356B552214A1110085EFDA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		F4356B572214A11B0085EFDA /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +149,7 @@
 		F4356B2F221498F40085EFDA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F4356B542214A0F70085EFDA /* Language */,
 				F4356B16221498080085EFDA /* Assets.xcassets */,
 				F4356B18221498080085EFDA /* LaunchScreen.storyboard */,
 				F4356B0C221498070085EFDA /* AppDelegate.swift */,
@@ -251,6 +256,15 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		F4356B542214A0F70085EFDA /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				F4356B552214A1110085EFDA /* Localizable.strings */,
+				F4356B572214A11B0085EFDA /* Language.swift */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -335,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4356B1A221498080085EFDA /* LaunchScreen.storyboard in Resources */,
+				F4356B562214A1110085EFDA /* Localizable.strings in Resources */,
 				F4356B17221498080085EFDA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +425,7 @@
 				F4356B15221498070085EFDA /* PostsViewer.xcdatamodeld in Sources */,
 				F4356B3C221499730085EFDA /* User.swift in Sources */,
 				F4356B44221499D40085EFDA /* PostDetailsViewController.swift in Sources */,
+				F4356B582214A11B0085EFDA /* Language.swift in Sources */,
 				F4356B0D221498070085EFDA /* AppDelegate.swift in Sources */,
 				F4356B41221499BA0085EFDA /* PostsListViewController.swift in Sources */,
 				F4356B4D22149B5F0085EFDA /* UserView.swift in Sources */,
