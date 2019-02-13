@@ -30,6 +30,7 @@
 		F4356B5D2214B8370085EFDA /* PostDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4356B5C2214B8370085EFDA /* PostDetails.storyboard */; };
 		F4356B5F2214BA070085EFDA /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B5E2214BA070085EFDA /* UserTableViewCell.swift */; };
 		F4356B612214BA130085EFDA /* PostDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B602214BA130085EFDA /* PostDescriptionTableViewCell.swift */; };
+		F4356B642214BD470085EFDA /* PostDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B632214BD470085EFDA /* PostDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		F4356B5C2214B8370085EFDA /* PostDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PostDetails.storyboard; sourceTree = "<group>"; };
 		F4356B5E2214BA070085EFDA /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		F4356B602214BA130085EFDA /* PostDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		F4356B632214BD470085EFDA /* PostDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 		F4356B33221499380085EFDA /* PostDetails */ = {
 			isa = PBXGroup;
 			children = (
+				F4356B622214BD340085EFDA /* ViewModels */,
 				F4356B4922149A130085EFDA /* Views */,
 				F4356B42221499C80085EFDA /* Controllers */,
 			);
@@ -280,6 +283,14 @@
 				F4356B592214A2120085EFDA /* UIColor+Style.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F4356B622214BD340085EFDA /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				F4356B632214BD470085EFDA /* PostDetailsViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,6 +461,7 @@
 				F4356B5A2214A2120085EFDA /* UIColor+Style.swift in Sources */,
 				F4356B3E221499800085EFDA /* Company.swift in Sources */,
 				F4356B612214BA130085EFDA /* PostDescriptionTableViewCell.swift in Sources */,
+				F4356B642214BD470085EFDA /* PostDetailsViewModel.swift in Sources */,
 				F4356B47221499E90085EFDA /* PostTableViewCell.swift in Sources */,
 				F4356B5022149B8E0085EFDA /* PostsListViewModel.swift in Sources */,
 				F4356B382214995D0085EFDA /* Comment.swift in Sources */,

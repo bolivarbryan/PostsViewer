@@ -2,6 +2,7 @@ import UIKit
 
 class PostDescriptionTableViewCell: UITableViewCell {
     static let identifier = "PostDescriptionTableViewCell"
+    @IBOutlet weak var bodyLabel: UILabel?
 
     override func awakeFromNib() {
         super.awakeFromNib()

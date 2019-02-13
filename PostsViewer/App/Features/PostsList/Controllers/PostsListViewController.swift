@@ -72,14 +72,15 @@ class PostsListViewController: UIViewController {
             .disposed(by: disposeBag)
 
         tableView.rx.modelSelected(Post.self).asObservable()
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { element in
                 let storyboard = UIStoryboard(name: "PostDetails", bundle: nil)
 
                 guard
-                    let vc = storyboard.instantiateInitialViewController()
+                    let vc = storyboard.instantiateInitialViewController() as? PostDetailsViewController
                     else { return }
 
                 self.navigationController?.pushViewController(vc, animated: true)
+                vc.post = element
             })
         .disposed(by: disposeBag)
     }

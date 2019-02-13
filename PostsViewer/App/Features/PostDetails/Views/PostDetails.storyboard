@@ -43,6 +43,9 @@
                                                 <constraint firstItem="NnF-qC-XcJ" firstAttribute="top" secondItem="1qz-s6-cpc" secondAttribute="top" constant="10" id="gHa-lN-7Ib"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="bodyLabel" destination="NnF-qC-XcJ" id="OLZ-Rd-aR4"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserTableViewCell" rowHeight="137" id="cIQ-pN-xle" customClass="UserTableViewCell" customModule="PostsViewer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="115.5" width="375" height="137"/>
@@ -104,6 +107,12 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="D6q-7g-kPq" secondAttribute="trailing" constant="25" id="z6c-jR-IK4"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="emailLabel" destination="5I6-ya-C5e" id="sxd-Xf-0hA"/>
+                                            <outlet property="nameLabel" destination="fRr-GN-3ci" id="MS1-rd-zhn"/>
+                                            <outlet property="phoneLabel" destination="32d-9a-uIJ" id="HeD-y8-odk"/>
+                                            <outlet property="websiteLabel" destination="D6q-7g-kPq" id="arH-6j-vDA"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableViewCell" rowHeight="73" id="rfp-AP-2oA" customClass="CommentTableViewCell" customModule="PostsViewer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="252.5" width="375" height="73"/>
@@ -158,6 +167,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="irW-WS-1oX"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="a5V-cz-xNB" id="8hm-LJ-cO3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bxi-es-fbL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

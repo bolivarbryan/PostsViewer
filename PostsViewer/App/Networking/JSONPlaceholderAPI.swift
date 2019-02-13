@@ -2,6 +2,7 @@ import Moya
 
 enum JSONPlaceholderAPI {
     case posts
+    case userDetails(id: Int)
 }
 
 extension JSONPlaceholderAPI: TargetType {
@@ -12,19 +13,21 @@ extension JSONPlaceholderAPI: TargetType {
         switch self {
         case .posts:
             return "/posts"
+        case let .userDetails(id):
+            return "/users/\(id)/"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .posts:
+        case .posts, .userDetails:
             return .get
         }
     }
 
     var task: Task {
         switch self {
-        case .posts:
+        case .posts, .userDetails:
             return .requestPlain
         }
     }

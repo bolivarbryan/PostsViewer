@@ -4,6 +4,23 @@ import UIKit
 
 class PostDetailsViewController: UIViewController {
 
+    var post: Post? {
+        didSet {
+
+            guard
+                let post = post
+                else { return }
+
+            viewModel.fetchUserDetails(userID: post.userID, completion: {
+                self.tableView?.reloadData()
+            })
+        }
+    }
+
+    var viewModel = PostDetailsViewModel()
+
+    @IBOutlet weak var tableView: UITableView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -15,10 +32,12 @@ extension PostDetailsViewController: UITableViewDataSource {
         case 0:
             let cellIdentifier = PostDescriptionTableViewCell.identifier
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! PostDescriptionTableViewCell
+            cell.bodyLabel?.text = post?.body
             return cell
         case 1:
             let cellIdentifier = UserTableViewCell.identifier
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! UserTableViewCell
+            cell.user = viewModel.currentUser
             return cell
         case 2:
             let cellIdentifier = CommentTableViewCell.identifier
