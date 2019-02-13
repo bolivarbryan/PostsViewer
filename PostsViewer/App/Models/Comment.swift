@@ -1,8 +1,11 @@
 import Foundation
 
 struct Comment: Codable {
-    let postID, id: Int
-    let name, email, body: String
+    let postID: Int
+    let id: Int
+    let name: String
+    let email: String
+    let body: String
 
     enum CodingKeys: String, CodingKey {
         case postID = "postId"
