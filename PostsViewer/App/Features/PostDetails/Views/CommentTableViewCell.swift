@@ -4,7 +4,7 @@ class CommentTableViewCell: UITableViewCell {
     static let identifier = "CommentTableViewCell"
 
     var comment: Comment? = nil {
-        didSet {
+        didSet {
             guard
                 let comment = comment
                 else { return }
