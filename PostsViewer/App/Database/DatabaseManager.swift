@@ -8,14 +8,15 @@ protocol DatabaseRequest {
 
 enum DatabaseEndpoint: DatabaseRequest {
     case listPosts
-    case savePost(_ post: Post)
+    case savePost(_ post: Post, seen: Bool)
+    case favoritePost(postID: Int, value: Bool)
+    case markPostAssSeen(postID: Int)
     case deletePost(postID: Int)
     case deleteAllPosts()
     case listComments(postID: Int)
     case saveComment(_ comment: Comment)
     case user(userID: Int)
     case saveUser(user: User)
-    case favoritePost(postID: Int, value: Bool)
 
     func fetch(completion: ([Any]) -> ()) {
         switch self {
@@ -37,7 +38,7 @@ enum DatabaseEndpoint: DatabaseRequest {
 
     func save() {
         switch self {
-        case let .savePost(post):
+        case let .savePost(post, seen):
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
             let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
@@ -46,6 +47,7 @@ enum DatabaseEndpoint: DatabaseRequest {
             newPost.setValue(post.title, forKey: "title")
             newPost.setValue(post.userID, forKey: "userId")
             newPost.setValue(post.body, forKey: "body")
+            newPost.setValue(seen, forKey: "seen")
             do {
                 try context.save()
             } catch {

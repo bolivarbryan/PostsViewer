@@ -26,7 +26,6 @@ class PostTableViewCell: UITableViewCell {
             $0.centerY.equalToSuperview()
             $0.left.equalToSuperview().offset(10)
         }
-        bulletView.backgroundColor = .blue
         bulletView.layer.cornerRadius = 8
 
         addSubview(bodyLabel)
@@ -41,6 +40,18 @@ class PostTableViewCell: UITableViewCell {
             .map({ $0?.body })
             .bind(to: bodyLabel.rx.text)
             .disposed(by: disposeBag)
+
+        post.asObservable()
+            .map({ $0?.seen ?? true })
+            .subscribe(onNext: {
+                switch $0 {
+                case true:
+                    self.bulletView.backgroundColor = .red
+                case false:
+                    self.bulletView.backgroundColor = .blue
+                }
+            })
+        .disposed(by: disposeBag)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
