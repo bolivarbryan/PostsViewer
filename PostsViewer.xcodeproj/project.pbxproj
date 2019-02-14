@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EB71775E2FFDFB1F9B0E856C /* Pods_PostsViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76857C94878CE0B54D579248 /* Pods_PostsViewer.framework */; };
+		F410A1C22215F7650065B25C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F410A1C12215F7650065B25C /* DatabaseManager.swift */; };
 		F4356B0D221498070085EFDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4356B0C221498070085EFDA /* AppDelegate.swift */; };
 		F4356B15221498070085EFDA /* PostsViewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4356B13221498070085EFDA /* PostsViewer.xcdatamodeld */; };
 		F4356B17221498080085EFDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4356B16221498080085EFDA /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 		05B393F293F983E662047520 /* Pods-PostsViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PostsViewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-PostsViewer/Pods-PostsViewer.release.xcconfig"; sourceTree = "<group>"; };
 		76857C94878CE0B54D579248 /* Pods_PostsViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PostsViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6957FC90E8BB550AC599021 /* Pods_PostsViewerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PostsViewerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F410A1C12215F7650065B25C /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		F4356B09221498070085EFDA /* PostsViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostsViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4356B0C221498070085EFDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4356B14221498070085EFDA /* PostsViewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostsViewer.xcdatamodel; sourceTree = "<group>"; };
@@ -114,6 +116,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F410A1C02215F7550065B25C /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				F410A1C12215F7650065B25C /* DatabaseManager.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		F4356B00221498070085EFDA = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +179,7 @@
 		F4356B30221498F90085EFDA /* App */ = {
 			isa = PBXGroup;
 			children = (
+				F410A1C02215F7550065B25C /* Database */,
 				F4356B5122149B9C0085EFDA /* Networking */,
 				F4356B34221499440085EFDA /* Models */,
 				F4356B31221499220085EFDA /* Features */,
@@ -462,6 +473,7 @@
 				F4356B3E221499800085EFDA /* Company.swift in Sources */,
 				F4356B612214BA130085EFDA /* PostDescriptionTableViewCell.swift in Sources */,
 				F4356B642214BD470085EFDA /* PostDetailsViewModel.swift in Sources */,
+				F410A1C22215F7650065B25C /* DatabaseManager.swift in Sources */,
 				F4356B47221499E90085EFDA /* PostTableViewCell.swift in Sources */,
 				F4356B5022149B8E0085EFDA /* PostsListViewModel.swift in Sources */,
 				F4356B382214995D0085EFDA /* Comment.swift in Sources */,
