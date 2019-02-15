@@ -22,22 +22,16 @@ enum DatabaseEndpoint: DatabaseRequest {
     case user(userID: Int)
     case saveUser(user: User)
 
-    func sendRequest(request: NSFetchRequest<NSFetchRequestResult>, completion: ([Any]) -> ()) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        do {
-            let result = try context.fetch(request)
-            completion(self.convertToJSONArray(managedObjects: result as! [NSManagedObject]))
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-
     func fetch(completion: ([Any]) -> ()) {
         switch self {
         case .listPosts:
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PostEntity")
             fetchRequest.returnsObjectsAsFaults = false
+            sendRequest(request: fetchRequest, completion: completion)
+        case let .user(userID):
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "UserEntity")
+            fetchRequest.returnsObjectsAsFaults = false
+            fetchRequest.predicate = NSPredicate(format: "id = \(userID)")
             sendRequest(request: fetchRequest, completion: completion)
         default:
             assertionFailure("Invalid endpoint used \(self)")
@@ -48,6 +42,8 @@ enum DatabaseEndpoint: DatabaseRequest {
         switch self {
         case let .savePost(post, seen):
             savePost(post: post, seen: seen)
+        case let .saveUser(user):
+            saveUser(user)
         default:
             assertionFailure("Invalid endpoint used \(self)")
         }
@@ -74,6 +70,17 @@ enum DatabaseEndpoint: DatabaseRequest {
             deletePost(postID: postID)
         default:
             assertionFailure("Invalid endpoint used \(self)")
+        }
+    }
+
+    func sendRequest(request: NSFetchRequest<NSFetchRequestResult>, completion: ([Any]) -> ()) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        do {
+            let result = try context.fetch(request)
+            completion(self.convertToJSONArray(managedObjects: result as! [NSManagedObject]))
+        } catch {
+            print(error.localizedDescription)
         }
     }
 
@@ -154,4 +161,18 @@ extension DatabaseEndpoint {
         newPost.setValue(true, forKey: "visible")
         try? context.save()
     }
+
+    func saveUser(_ user: User) {
+        let entity = NSEntityDescription.entity(forEntityName: "UserEntity", in: context)
+        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+        newUser.setValue(user.id, forKey: "id")
+        newUser.setValue(user.name, forKey: "name")
+        newUser.setValue(user.email, forKey: "email")
+        newUser.setValue(user.phone, forKey: "phone")
+        newUser.setValue(user.website, forKey: "website")
+        newUser.setValue(user.address.dataRepresentation, forKey: "address")
+        newUser.setValue(user.company.dataRepresentation, forKey: "company")
+        try? context.save()
+    }
+
 }

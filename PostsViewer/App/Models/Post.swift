@@ -32,7 +32,11 @@ struct Post: Codable {
     }
 }
 
-extension Post: Equatable {
+extension Post: Equatable, Comparable {
+
+    static func < (lhs: Post, rhs: Post) -> Bool {
+        return lhs.id < rhs.id
+    }
 
     static func == (lhs: Post, rhs: Post) -> Bool {
         return lhs.id == rhs.id

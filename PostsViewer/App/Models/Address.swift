@@ -6,6 +6,11 @@ struct Address: Codable {
     let city: String
     let zipcode: String
     let geo: Geo
+
+    var dataRepresentation: Data? {
+        let data = try? JSONEncoder().encode(self)
+        return data
+    }
 }
 
 struct Geo: Codable {

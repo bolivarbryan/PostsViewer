@@ -48,8 +48,13 @@ class PostListViewModel {
                 .compactMap({ Post(from: $0) })
                 .filter({$0.visible == true})
 
-            var groupedPosts = posts.filter { $0.seen == false }
-            let seenPosts = posts.filter { $0.seen == true }
+            var groupedPosts = posts
+                .filter { $0.seen == false }
+                .sorted()
+
+            let seenPosts = posts
+                .filter { $0.seen == true }
+                .sorted()
             groupedPosts.append(contentsOf: seenPosts)
             self.posts.value = groupedPosts
         }

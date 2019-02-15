@@ -6,6 +6,9 @@ class PostDetailsViewModel {
     var currentUser: User? = nil
 
     func fetchUserDetails(userID: Int, completion: @escaping () -> ()) {
+
+        fetchUserFromLocalDatabase(userID: userID, completion: completion)
+
         let provider = MoyaProvider<JSONPlaceholderAPI>()
         provider.request(.userDetails(id: userID)) { (result) in
             switch result {
@@ -15,6 +18,10 @@ class PostDetailsViewModel {
                 do {
                     let user = try JSONDecoder().decode(User.self, from: data)
                     self.currentUser = user
+
+                    let databaseManager = DatabaseEndpoint.saveUser(user: user)
+                    databaseManager.save()
+                    
                     completion()
                 } catch {
                     print(error.localizedDescription)
@@ -42,6 +49,19 @@ class PostDetailsViewModel {
             case let .failure(error):
                 print(error.localizedDescription)
             }
+        }
+    }
+
+    func fetchUserFromLocalDatabase(userID: Int, completion: () -> ()) {
+        let database = DatabaseEndpoint.user(userID: userID)
+        database.fetch { (response) in
+            let array = response as! [[String: Any]]
+            guard
+                let userObject = array.first,
+                let user = User(from: userObject)
+                else { return }
+            self.currentUser = user
+            completion()
         }
     }
 }
