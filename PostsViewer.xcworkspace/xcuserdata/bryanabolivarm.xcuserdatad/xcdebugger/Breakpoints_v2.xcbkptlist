@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PostsViewer/App/Features/PostDetails/Controllers/PostDetailsViewController.swift"
-            timestampString = "571919733.875994"
+            timestampString = "571943283.842381"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "toggleFavorite()"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PostsViewer/App/Features/PostDetails/Controllers/PostDetailsViewController.swift"
-            timestampString = "571919733.876085"
+            timestampString = "571943283.842705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PostsViewer/App/Features/PostDetails/Controllers/PostDetailsViewController.swift"
-            timestampString = "571919733.876155"
+            timestampString = "571943283.842927"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "toggleFavorite()"
             landmarkType = "7">
          </BreakpointContent>

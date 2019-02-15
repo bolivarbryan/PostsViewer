@@ -27,6 +27,14 @@ class PostDetailsViewController: UIViewController {
             }
         }
     }
+
+    enum DetailsSection: Int {
+        case description = 0
+        case userInfo = 1
+        case comments = 2
+    }
+
+
     var favoriteButton: UIBarButtonItem?
     var viewModel = PostDetailsViewModel()
     var delegate: PostDetailsDelegate?
@@ -65,22 +73,22 @@ class PostDetailsViewController: UIViewController {
 
 extension PostDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
+        switch DetailsSection(rawValue: indexPath.section) {
+        case .description?:
             let cellIdentifier = PostDescriptionTableViewCell.identifier
             guard
                 let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PostDescriptionTableViewCell
                 else { fatalError("Cell Dequeue did fail") }
             cell.bodyLabel?.text = post?.body
             return cell
-        case 1:
+        case .userInfo?:
             let cellIdentifier = UserTableViewCell.identifier
             guard
                 let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? UserTableViewCell
                 else { fatalError("Cell Dequeue did fail") }
             cell.user = viewModel.currentUser
             return cell
-        case 2:
+        case .comments?:
             let cellIdentifier = CommentTableViewCell.identifier
             guard
                 let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CommentTableViewCell
@@ -96,11 +104,13 @@ extension PostDetailsViewController: UITableViewDataSource {
 extension PostDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0, 1:
+        switch DetailsSection(rawValue: section) {
+        case .description? , .userInfo?:
             return 1
-        default:
+        case .comments?:
             return viewModel.comments.count
+        default:
+            return 0
         }
     }
 
@@ -113,12 +123,12 @@ extension PostDetailsViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
+        switch DetailsSection(rawValue: section) {
+        case .description?:
             return Language.description.localized.capitalized
-        case 1:
+        case .userInfo?:
             return Language.user.localized.capitalized
-        case 2:
+        case .comments?:
             return Language.comment.localized.pluralized.capitalized
         default:
             return nil
