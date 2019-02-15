@@ -6,7 +6,6 @@ class PostDetailsViewController: UIViewController {
 
     var post: Post? {
         didSet {
-
             guard
                 let post = post
                 else { return }

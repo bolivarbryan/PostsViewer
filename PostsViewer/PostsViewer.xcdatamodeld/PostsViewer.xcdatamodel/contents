@@ -6,6 +6,7 @@
         <attribute name="seen" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="visible" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -14,6 +15,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="PostEntity" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="PostEntity" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

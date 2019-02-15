@@ -6,6 +6,7 @@ struct Post: Codable {
     let title: String
     let body: String
     var seen: Bool = true
+    var visible: Bool = true
 
     enum CodingKeys: String, CodingKey {
         case userID = "userId"
@@ -18,7 +19,8 @@ struct Post: Codable {
             let id = dictionary["id"] as? Int,
             let title = dictionary["title"] as? String,
             let body = dictionary["body"] as? String,
-            let seen = dictionary["seen"] as? Bool
+            let seen = dictionary["seen"] as? Bool,
+            let visible = dictionary["visible"] as? Bool
             else { return nil }
 
         self.userID = userID
@@ -26,13 +28,11 @@ struct Post: Codable {
         self.title = title
         self.body = body
         self.seen = seen
+        self.visible = visible
     }
 }
 
-extension Post: Comparable, Equatable {
-    static func < (lhs: Post, rhs: Post) -> Bool {
-        return lhs.id < rhs.id
-    }
+extension Post: Equatable {
 
     static func == (lhs: Post, rhs: Post) -> Bool {
         return lhs.id == rhs.id

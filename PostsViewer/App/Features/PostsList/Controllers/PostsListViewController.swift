@@ -34,7 +34,7 @@ class PostsListViewController: UIViewController {
     }
 
     func configureUI() {
-
+        
         //Delete Button
         view.addSubview(deleteButton)
         deleteButton.snp.makeConstraints {
@@ -44,7 +44,7 @@ class PostsListViewController: UIViewController {
 
         deleteButton.rx.tap.asObservable()
             .subscribe(onNext: { _ in
-                self.viewModel.deleteAllPosts()
+                self.viewModel.deleteAllPosts(clearCache: false)
             })
             .disposed(by: disposeBag)
 
@@ -75,6 +75,7 @@ class PostsListViewController: UIViewController {
 
         reloadButton.rx.tap.asObservable()
             .subscribe(onNext: { _ in
+                self.viewModel.deleteAllPosts(clearCache: true)
                 self.viewModel.fetchPosts()
             })
             .disposed(by: disposeBag)
@@ -104,6 +105,14 @@ class PostsListViewController: UIViewController {
                     database.update()
                     self.viewModel.fetchPostsFromLocalDatabase()
                 }
+            })
+        .disposed(by: disposeBag)
+
+        tableView.rx.modelDeleted(Post.self).asObservable()
+            .subscribe(onNext:{ post in
+                //TODO: Improve animation when user deletes row. Apply tableView.deleteRow method
+                self.viewModel.deletePost(post: post, clearCache: false)
+                self.viewModel.fetchPostsFromLocalDatabase()
             })
         .disposed(by: disposeBag)
     }

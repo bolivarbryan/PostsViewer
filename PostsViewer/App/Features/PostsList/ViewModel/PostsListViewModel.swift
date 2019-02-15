@@ -21,16 +21,21 @@ class PostListViewModel {
     }
 
     private func decodeAndStorePostsFromData(_  data: Data) {
-        do {
-            let posts = try JSONDecoder().decode([Post].self, from: data)
-            posts.enumerated().forEach({ (index, post) in
-                if !self.posts.value.contains(post) {
-                    let db = DatabaseEndpoint.savePost(post, seen: index > 20)
-                    db.save()
-                }
-            })
-        } catch {
-            print(error.localizedDescription)
+        let database = DatabaseEndpoint.listPosts
+        database.fetch { (response) in
+            let array = response as! [[String: Any]]
+            let postsArray = array.compactMap({ Post(from: $0) })
+            do {
+                let posts = try JSONDecoder().decode([Post].self, from: data)
+                posts.enumerated().forEach({ (index, post) in
+                    if !postsArray.contains(post) {
+                        let db = DatabaseEndpoint.savePost(post, seen: index > 20)
+                        db.save()
+                    }
+                })
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 
@@ -38,7 +43,11 @@ class PostListViewModel {
         let database = DatabaseEndpoint.listPosts
         database.fetch { (response) in
             let array = response as! [[String: Any]]
-            let posts = array.compactMap({ Post(from: $0) })
+
+            let posts = array
+                .compactMap({ Post(from: $0) })
+                .filter({$0.visible == true})
+
             var groupedPosts = posts.filter { $0.seen == false }
             let seenPosts = posts.filter { $0.seen == true }
             groupedPosts.append(contentsOf: seenPosts)
@@ -46,9 +55,19 @@ class PostListViewModel {
         }
     }
 
-    func deleteAllPosts() {
+    func deleteAllPosts(clearCache: Bool) {
         let database = DatabaseEndpoint.deleteAllPosts()
-        database.delete()
-        fetchPostsFromLocalDatabase()
+        switch clearCache {
+        case true:
+            database.delete()
+        case false:
+            database.update()
+            fetchPostsFromLocalDatabase()
+        }
+    }
+
+    func deletePost(post: Post, clearCache: Bool) {
+        let database = DatabaseEndpoint.deletePost(postID: post.id)
+        database.update()
     }
 }

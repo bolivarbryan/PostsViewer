@@ -22,11 +22,12 @@ enum DatabaseEndpoint: DatabaseRequest {
         switch self {
         case .listPosts:
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PostEntity")
-            request.returnsObjectsAsFaults = false
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PostEntity")
+            fetchRequest.returnsObjectsAsFaults = false
+
             do {
                 let context = appDelegate.persistentContainer.viewContext
-                let result = try context.fetch(request)
+                let result = try context.fetch(fetchRequest)
                 completion(self.convertToJSONArray(moArray: result as! [NSManagedObject]))
             } catch {
                 print(error.localizedDescription)
@@ -49,6 +50,7 @@ enum DatabaseEndpoint: DatabaseRequest {
             newPost.setValue(post.userID, forKey: "userId")
             newPost.setValue(post.body, forKey: "body")
             newPost.setValue(seen, forKey: "seen")
+            newPost.setValue(true, forKey: "visible")
             do {
                 try context.save()
             } catch {
@@ -85,6 +87,55 @@ enum DatabaseEndpoint: DatabaseRequest {
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
+        case .deleteAllPosts():
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
+            guard
+                let name = entity?.name
+                else { return }
+
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+
+            do {
+
+                let posts = try context.fetch(fetchRequest) as? [NSManagedObject]
+                guard
+                    let post = posts?.first
+                    else { return }
+
+                post.setValue(false, forKey: "visible")
+                try context.save()
+
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+
+        case let .deletePost(postID):
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
+            guard
+                let name = entity?.name
+                else { return }
+
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+            fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
+
+            do {
+
+                let posts = try context.fetch(fetchRequest) as? [NSManagedObject]
+                guard
+                    let post = posts?.first
+                    else { return }
+
+                post.setValue(false, forKey: "visible")
+                try context.save()
+
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+
         default:
             fatalError("Invalid endpoint used \(self)")
         }
@@ -108,6 +159,24 @@ enum DatabaseEndpoint: DatabaseRequest {
             } catch {
                 print ("There was an error")
             }
+        case let .deletePost(postID):
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
+            guard
+                let name = entity?.name
+                else { return }
+
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+            fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            do {
+                try context.execute(deleteRequest)
+                try context.save()
+            } catch {
+                print ("There was an error")
+            }
+
         default:
             fatalError("Invalid endpoint used \(self)")
         }
