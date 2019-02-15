@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PostsViewer/App/Features/PostsList/ViewModel/PostsListViewModel.swift"
-            timestampString = "571911665.22822"
+            timestampString = "571913380.534062"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
@@ -42,12 +42,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PostsViewer/App/Features/PostsList/ViewModel/PostsListViewModel.swift"
-            timestampString = "571911665.22927"
+            timestampString = "571913380.534124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
             endingLineNumber = "28"
             landmarkName = "decodeAndStorePostsFromData(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PostsViewer/App/Database/DatabaseManager.swift"
+            timestampString = "571913380.53417"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "saveComment(comment:postID:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

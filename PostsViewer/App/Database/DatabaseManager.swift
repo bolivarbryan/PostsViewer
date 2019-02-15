@@ -18,7 +18,7 @@ enum DatabaseEndpoint: DatabaseRequest {
     case deletePost(postID: Int)
     case deleteAllPosts()
     case listComments(postID: Int)
-    case saveComment(_ comment: Comment)
+    case saveComment(_ comment: Comment, postID: Int)
     case user(userID: Int)
     case saveUser(user: User)
 
@@ -33,6 +33,11 @@ enum DatabaseEndpoint: DatabaseRequest {
             fetchRequest.returnsObjectsAsFaults = false
             fetchRequest.predicate = NSPredicate(format: "id = \(userID)")
             sendRequest(request: fetchRequest, completion: completion)
+        case let .listComments(postID):
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CommentEntity")
+            fetchRequest.returnsObjectsAsFaults = false
+            fetchRequest.predicate = NSPredicate(format: "postId = \(postID)")
+            sendRequest(request: fetchRequest, completion: completion)
         default:
             assertionFailure("Invalid endpoint used \(self)")
         }
@@ -44,6 +49,8 @@ enum DatabaseEndpoint: DatabaseRequest {
             savePost(post: post, seen: seen)
         case let .saveUser(user):
             saveUser(user)
+        case let .saveComment(comment, postID):
+            saveComment(comment: comment, postID: postID)
         default:
             assertionFailure("Invalid endpoint used \(self)")
         }
@@ -135,9 +142,7 @@ extension DatabaseEndpoint {
         fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
 
         do {
-
             let posts = try context.fetch(fetchRequest) as? [NSManagedObject]
-
             guard
                 let post = posts?.first
                 else { return }
@@ -172,6 +177,15 @@ extension DatabaseEndpoint {
         newUser.setValue(user.website, forKey: "website")
         newUser.setValue(user.address.dataRepresentation, forKey: "address")
         newUser.setValue(user.company.dataRepresentation, forKey: "company")
+        try? context.save()
+    }
+
+    func saveComment(comment: Comment, postID: Int) {
+        let entity = NSEntityDescription.entity(forEntityName: "CommentEntity", in: context)
+        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+        newUser.setValue(postID, forKey: "postId")
+        newUser.setValue(comment.name, forKey: "name")
+        newUser.setValue(comment.body, forKey: "body")
         try? context.save()
     }
 
