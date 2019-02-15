@@ -23,6 +23,16 @@ class PostsListViewController: UIViewController {
         return control
     }()
 
+    lazy var detailsVC: PostDetailsViewController = {
+        let storyboard = UIStoryboard(name: "PostDetails", bundle: nil)
+
+        guard
+            let vc = storyboard.instantiateInitialViewController() as? PostDetailsViewController
+            else { fatalError("Details Controller not found") }
+
+        return vc
+    }()
+
     let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
@@ -91,14 +101,9 @@ class PostsListViewController: UIViewController {
 
         tableView.rx.modelSelected(Post.self).asObservable()
             .subscribe(onNext: { element in
-                let storyboard = UIStoryboard(name: "PostDetails", bundle: nil)
 
-                guard
-                    let vc = storyboard.instantiateInitialViewController() as? PostDetailsViewController
-                    else { return }
-
-                self.navigationController?.pushViewController(vc, animated: true)
-                vc.post = element
+                self.navigationController?.pushViewController(self.detailsVC, animated: true)
+                self.detailsVC.post = element
 
                 DispatchQueue.main.async {
                     let database = DatabaseEndpoint.markPostAssSeen(postID: element.id)

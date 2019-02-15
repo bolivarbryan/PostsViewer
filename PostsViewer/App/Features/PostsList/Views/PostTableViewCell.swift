@@ -31,10 +31,12 @@ class PostTableViewCell: UITableViewCell {
         addSubview(bodyLabel)
         bodyLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
-            $0.right.bottom.equalToSuperview().offset(-10)
+            $0.right.equalToSuperview().offset(-20)
+            $0.bottom.equalToSuperview().offset(-10)
             $0.left.equalTo(bulletView.snp.right).offset(10)
         }
         bodyLabel.numberOfLines = 0
+        bodyLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
 
         post.asObservable()
             .map({ $0?.body })
