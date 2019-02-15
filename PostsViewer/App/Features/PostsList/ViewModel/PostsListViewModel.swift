@@ -4,7 +4,14 @@ import RxSwift
 import Moya
 
 class PostListViewModel {
-    let posts: Variable<[Post]> = Variable([])
+    private let posts: Variable<[Post]> = Variable([])
+    let filteredPosts: Variable<[Post]> = Variable([])
+
+    var shouldListOnlyFavorites: Bool = false {
+        didSet {
+            self.applyFiltering()
+        }
+    }
 
     func fetchPosts() {
         fetchPostsFromLocalDatabase()
@@ -57,6 +64,8 @@ class PostListViewModel {
                 .sorted()
             groupedPosts.append(contentsOf: seenPosts)
             self.posts.value = groupedPosts
+            self.applyFiltering()
+
         }
     }
 
@@ -78,4 +87,14 @@ class PostListViewModel {
         let database = DatabaseEndpoint.deletePost(postID: post.id)
         database.update()
     }
+
+    func applyFiltering() {
+        switch shouldListOnlyFavorites {
+        case true:
+            filteredPosts.value = posts.value.filter { $0.isFavorite }
+        case false:
+            filteredPosts.value = posts.value
+        }
+    }
+
 }

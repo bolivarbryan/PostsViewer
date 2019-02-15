@@ -45,9 +45,9 @@ class PostsListViewController: UIViewController {
         deleteButton.rx.tap.asObservable()
             .subscribe(onNext: { _ in
                 self.viewModel.deleteAllPosts(clearCache: false)
+                self.segmentedControl.selectedSegmentIndex = 0
             })
             .disposed(by: disposeBag)
-
 
         //Segmented Control
         view.addSubview(segmentedControl)
@@ -58,6 +58,11 @@ class PostsListViewController: UIViewController {
             $0.height.equalTo(40)
         }
         segmentedControl.selectedSegmentIndex = 0
+
+        segmentedControl.rx.selectedSegmentIndex.subscribe (onNext: { index in
+            self.viewModel.shouldListOnlyFavorites = (index == 1)
+        })
+        .disposed(by: disposeBag)
 
         //TableView
         view.addSubview(tableView)
@@ -77,11 +82,12 @@ class PostsListViewController: UIViewController {
             .subscribe(onNext: { _ in
                 self.viewModel.deleteAllPosts(clearCache: true)
                 self.viewModel.fetchPosts()
+                self.segmentedControl.selectedSegmentIndex = 0
             })
             .disposed(by: disposeBag)
 
         //Rx Binders
-        viewModel.posts.asObservable()
+        viewModel.filteredPosts.asObservable()
             .bind(to: tableView.rx.items(cellIdentifier: PostTableViewCell.identifier,
                                          cellType: PostTableViewCell.self)) {  row, element, cell in
                                             cell.post.value = element
