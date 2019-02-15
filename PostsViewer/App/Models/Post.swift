@@ -7,6 +7,7 @@ struct Post: Codable {
     let body: String
     var seen: Bool = true
     var visible: Bool = true
+    var isFavorite: Bool = false
 
     enum CodingKeys: String, CodingKey {
         case userID = "userId"
@@ -20,7 +21,8 @@ struct Post: Codable {
             let title = dictionary["title"] as? String,
             let body = dictionary["body"] as? String,
             let seen = dictionary["seen"] as? Bool,
-            let visible = dictionary["visible"] as? Bool
+            let visible = dictionary["visible"] as? Bool,
+            let favorite = dictionary["favorite"] as? Bool
             else { return nil }
 
         self.userID = userID
@@ -29,6 +31,7 @@ struct Post: Codable {
         self.body = body
         self.seen = seen
         self.visible = visible
+        self.isFavorite = favorite
     }
 }
 

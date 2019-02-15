@@ -6,6 +6,7 @@ class PostTableViewCell: UITableViewCell {
     static let identifier = "PostTableViewCell"
 
     let bulletView = UIView(frame: .zero)
+    let favoriteImageView = UIImageView(image: #imageLiteral(resourceName: "star-on"))
     let bodyLabel = UILabel(frame: .zero)
     let disposeBag = DisposeBag()
     let post: Variable<Post?> = Variable(nil)
@@ -20,6 +21,7 @@ class PostTableViewCell: UITableViewCell {
     }
 
     func configureUI() {
+        //Bullet
         addSubview(bulletView)
         bulletView.snp.makeConstraints {
             $0.height.width.equalTo(10)
@@ -28,6 +30,32 @@ class PostTableViewCell: UITableViewCell {
         }
         bulletView.layer.cornerRadius = 5
 
+        post.asObservable()
+            .map({ $0?.seen ?? true })
+            .subscribe(onNext: {
+                switch $0 {
+                case true:
+                    self.bulletView.backgroundColor = .white
+                case false:
+                    self.bulletView.backgroundColor = .customBlue
+                }
+            })
+            .disposed(by: disposeBag)
+
+        //Favorite
+        addSubview(favoriteImageView)
+        favoriteImageView.snp.makeConstraints {
+            $0.height.width.equalTo(16)
+            $0.center.equalTo(bulletView)
+        }
+        favoriteImageView.contentMode = .scaleAspectFit
+
+        post.asObservable()
+            .map({ !($0?.isFavorite ?? false) })
+            .bind(to: favoriteImageView.rx.isHidden)
+            .disposed(by: disposeBag)
+
+        //Body
         addSubview(bodyLabel)
         bodyLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
@@ -43,17 +71,6 @@ class PostTableViewCell: UITableViewCell {
             .bind(to: bodyLabel.rx.text)
             .disposed(by: disposeBag)
 
-        post.asObservable()
-            .map({ $0?.seen ?? true })
-            .subscribe(onNext: {
-                switch $0 {
-                case true:
-                    self.bulletView.backgroundColor = .white
-                case false:
-                    self.bulletView.backgroundColor = .customBlue
-                }
-            })
-        .disposed(by: disposeBag)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

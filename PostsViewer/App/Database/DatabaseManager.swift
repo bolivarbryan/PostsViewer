@@ -64,6 +64,8 @@ enum DatabaseEndpoint: DatabaseRequest {
             deleteAllPosts()
         case let .deletePost(postID):
             updatePost(postID: postID, field: "visible", value: false)
+        case let .favoritePost(postID, value):
+            updatePost(postID: postID, field: "favorite", value: value)
         default:
             assertionFailure("Invalid endpoint used \(self)")
         }
@@ -140,7 +142,7 @@ extension DatabaseEndpoint {
     func updatePost(postID: Int, field: String, value: Any) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PostEntity")
         fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
-
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         do {
             let posts = try context.fetch(fetchRequest) as? [NSManagedObject]
             guard

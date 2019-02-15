@@ -14,6 +14,7 @@
     </entity>
     <entity name="PostEntity" representedClassName="PostEntity" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="favorite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="seen" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
@@ -41,7 +42,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="PostEntity" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="PostEntity" positionX="-63" positionY="-18" width="128" height="150"/>
         <element name="UserEntity" positionX="-63" positionY="27" width="128" height="150"/>
         <element name="CommentEntity" positionX="-63" positionY="54" width="128" height="90"/>
     </elements>

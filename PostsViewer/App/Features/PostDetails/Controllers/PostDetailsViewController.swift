@@ -2,6 +2,10 @@ import UIKit
 
 // I made this implementation without Rx and Snp just for showing my work style using standard conventions
 
+protocol PostDetailsDelegate {
+    func toggledFavorite()
+}
+
 class PostDetailsViewController: UIViewController {
 
     var post: Post? {
@@ -17,18 +21,45 @@ class PostDetailsViewController: UIViewController {
             viewModel.fetchCommentsFromPost(postID: post.id) {
                 self.tableView?.reloadData()
             }
+
+            if favoriteButton == nil {
+                configureRightBarButtonItem()
+            }
         }
     }
-
+    var favoriteButton: UIBarButtonItem?
     var viewModel = PostDetailsViewModel()
+    var delegate: PostDetailsDelegate?
+    let starOn =  #imageLiteral(resourceName: "star-on")
+    let starOff = #imageLiteral(resourceName: "star-off")
 
     @IBOutlet weak var tableView: UITableView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
 
-        let favoriteButton = UIBarButtonItem(image: #imageLiteral(resourceName: "star-off"), style: .plain, target: self, action: nil)
+    func configureRightBarButtonItem() {
+        guard
+            let post = post
+            else { return }
+
+        let star = (post.isFavorite == true) ?  starOn :  starOff
+        favoriteButton = UIBarButtonItem(image: star, style: .plain, target: self, action: #selector(toggleFavorite))
         navigationItem.rightBarButtonItem = favoriteButton
+    }
+
+    @objc func toggleFavorite() {
+        guard
+            let post = post
+            else { return }
+
+        let databaseManager = DatabaseEndpoint.favoritePost(postID: post.id, value: !post.isFavorite)
+        databaseManager.update()
+
+        self.post?.isFavorite = !post.isFavorite
+        favoriteButton?.image = (!post.isFavorite == true) ?  starOn :  starOff
+        delegate?.toggledFavorite()
     }
 }
 
