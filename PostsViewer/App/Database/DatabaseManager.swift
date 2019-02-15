@@ -41,6 +41,7 @@ enum DatabaseEndpoint: DatabaseRequest {
         case let .savePost(post, seen):
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
+            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
             let newPost = NSManagedObject(entity: entity!, insertInto: context)
             newPost.setValue(post.id, forKey: "id")
@@ -52,6 +53,36 @@ enum DatabaseEndpoint: DatabaseRequest {
                 try context.save()
             } catch {
                 //Duplicated value, just ignoring it
+            }
+        default: ()
+        }
+    }
+
+    func update() {
+        switch self {
+        case let .markPostAssSeen(postID):
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
+            guard
+                let name = entity?.name
+            else { return }
+
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+            fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
+
+            do {
+
+                let posts = try context.fetch(fetchRequest) as? [NSManagedObject]
+                guard
+                    let post = posts?.first
+                    else { return }
+
+                post.setValue(true, forKey: "seen")
+                try context.save()
+
+            } catch let error as NSError {
+                print(error.localizedDescription)
             }
         default: ()
         }

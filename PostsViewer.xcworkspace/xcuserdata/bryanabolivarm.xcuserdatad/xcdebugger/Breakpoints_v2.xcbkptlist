@@ -6,16 +6,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PostsViewer/App/Database/DatabaseManager.swift"
+            timestampString = "571882017.541666"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "fetch(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PostsViewer/App/Features/PostDetails/ViewModels/PostDetailsViewModel.swift"
-            timestampString = "571872946.342391"
+            filePath = "PostsViewer/App/Database/DatabaseManager.swift"
+            timestampString = "571882017.541725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "fetchCommentsFromPost(postID:completion:)"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "update()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +41,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PostsViewer/App/Database/DatabaseManager.swift"
-            timestampString = "571873588.1076339"
+            filePath = "PostsViewer/App/Features/PostsList/Views/PostTableViewCell.swift"
+            timestampString = "571882017.541772"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "fetch(completion:)"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "configureUI()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,11 +58,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PostsViewer/App/Features/PostsList/ViewModel/PostsListViewModel.swift"
-            timestampString = "571873588.107706"
+            timestampString = "571882017.54182"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "fetchPostsFromLocalDatabase()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PostsViewer/App/Features/PostsList/ViewModel/PostsListViewModel.swift"
+            timestampString = "571882017.542145"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
             landmarkName = "fetchPostsFromLocalDatabase()"
             landmarkType = "7">
          </BreakpointContent>

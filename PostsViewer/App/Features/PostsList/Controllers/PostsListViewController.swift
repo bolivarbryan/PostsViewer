@@ -79,7 +79,6 @@ class PostsListViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-
         //Rx Binders
         viewModel.posts.asObservable()
             .bind(to: tableView.rx.items(cellIdentifier: PostTableViewCell.identifier,
@@ -99,6 +98,12 @@ class PostsListViewController: UIViewController {
 
                 self.navigationController?.pushViewController(vc, animated: true)
                 vc.post = element
+
+                DispatchQueue.main.async {
+                    let database = DatabaseEndpoint.markPostAssSeen(postID: element.id)
+                    database.update()
+                    self.viewModel.fetchPostsFromLocalDatabase()
+                }
             })
         .disposed(by: disposeBag)
     }

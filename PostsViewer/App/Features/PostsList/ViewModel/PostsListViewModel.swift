@@ -25,7 +25,7 @@ class PostListViewModel {
             let posts = try JSONDecoder().decode([Post].self, from: data)
             posts.enumerated().forEach({ (index, post) in
                 if !self.posts.value.contains(post) {
-                    let db = DatabaseEndpoint.savePost(post, seen: index < 20)
+                    let db = DatabaseEndpoint.savePost(post, seen: index > 20)
                     db.save()
                 }
             })
@@ -34,17 +34,17 @@ class PostListViewModel {
         }
     }
 
-    private func fetchPostsFromLocalDatabase() {
+    func fetchPostsFromLocalDatabase() {
         let database = DatabaseEndpoint.listPosts
         database.fetch { (response) in
             let array = response as! [[String: Any]]
-            do {
-                let postData = try JSONSerialization.data(withJSONObject: array)
-                let posts = try JSONDecoder().decode([Post].self, from: postData)
-                self.posts.value = posts.sorted()
-            } catch {
-                print(error.localizedDescription)
-            }
+            let posts = array.compactMap({ Post(from: $0) })
+            var groupedPosts = posts.filter { $0.seen == false }
+            let seenPosts = posts.filter { $0.seen == true }
+            groupedPosts.append(contentsOf: seenPosts)
+
+            self.posts.value = groupedPosts
+
         }
     }
 
