@@ -22,11 +22,11 @@ class PostTableViewCell: UITableViewCell {
     func configureUI() {
         addSubview(bulletView)
         bulletView.snp.makeConstraints {
-            $0.height.width.equalTo(16)
+            $0.height.width.equalTo(10)
             $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().offset(10)
+            $0.left.equalToSuperview().offset(5)
         }
-        bulletView.layer.cornerRadius = 8
+        bulletView.layer.cornerRadius = 5
 
         addSubview(bodyLabel)
         bodyLabel.snp.makeConstraints {
@@ -46,9 +46,9 @@ class PostTableViewCell: UITableViewCell {
             .subscribe(onNext: {
                 switch $0 {
                 case true:
-                    self.bulletView.backgroundColor = .red
+                    self.bulletView.backgroundColor = .white
                 case false:
-                    self.bulletView.backgroundColor = .blue
+                    self.bulletView.backgroundColor = .customBlue
                 }
             })
         .disposed(by: disposeBag)

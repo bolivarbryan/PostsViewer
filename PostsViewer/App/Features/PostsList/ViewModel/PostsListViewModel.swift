@@ -61,12 +61,15 @@ class PostListViewModel {
     }
 
     func deleteAllPosts(clearCache: Bool) {
-        let database = DatabaseEndpoint.deleteAllPosts()
         switch clearCache {
         case true:
+            let database = DatabaseEndpoint.deleteAllPosts()
             database.delete()
         case false:
-            database.update()
+            posts.value.forEach { post in
+                self.deletePost(post: post, clearCache: clearCache)
+            }
+
             fetchPostsFromLocalDatabase()
         }
     }
