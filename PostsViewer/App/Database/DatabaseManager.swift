@@ -6,6 +6,10 @@ protocol DatabaseRequest {
     func fetch(completion: ([Any]) -> ())
 }
 
+enum DatabaseError: Error {
+    case invalidEnpoint
+}
+
 enum DatabaseEndpoint: DatabaseRequest {
     case listPosts
     case savePost(_ post: Post, seen: Bool)
@@ -18,173 +22,65 @@ enum DatabaseEndpoint: DatabaseRequest {
     case user(userID: Int)
     case saveUser(user: User)
 
+    func sendRequest(request: NSFetchRequest<NSFetchRequestResult>, completion: ([Any]) -> ()) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        do {
+            let result = try context.fetch(request)
+            completion(self.convertToJSONArray(managedObjects: result as! [NSManagedObject]))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
     func fetch(completion: ([Any]) -> ()) {
         switch self {
         case .listPosts:
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PostEntity")
             fetchRequest.returnsObjectsAsFaults = false
-
-            do {
-                let context = appDelegate.persistentContainer.viewContext
-                let result = try context.fetch(fetchRequest)
-                completion(self.convertToJSONArray(moArray: result as! [NSManagedObject]))
-            } catch {
-                print(error.localizedDescription)
-            }
+            sendRequest(request: fetchRequest, completion: completion)
         default:
-            completion([])
+            assertionFailure("Invalid endpoint used \(self)")
         }
     }
 
     func save() {
         switch self {
         case let .savePost(post, seen):
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
-            let newPost = NSManagedObject(entity: entity!, insertInto: context)
-            newPost.setValue(post.id, forKey: "id")
-            newPost.setValue(post.title, forKey: "title")
-            newPost.setValue(post.userID, forKey: "userId")
-            newPost.setValue(post.body, forKey: "body")
-            newPost.setValue(seen, forKey: "seen")
-            newPost.setValue(true, forKey: "visible")
-            do {
-                try context.save()
-            } catch {
-                //Duplicated value, just ignoring it
-            }
+            savePost(post: post, seen: seen)
         default:
-            fatalError("Invalid endpoint used \(self)")
+            assertionFailure("Invalid endpoint used \(self)")
         }
     }
 
     func update() {
         switch self {
         case let .markPostAssSeen(postID):
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
-            guard
-                let name = entity?.name
-            else { return }
-
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
-            fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
-
-            do {
-
-                let posts = try context.fetch(fetchRequest) as? [NSManagedObject]
-                guard
-                    let post = posts?.first
-                    else { return }
-
-                post.setValue(true, forKey: "seen")
-                try context.save()
-
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
+            updatePost(postID: postID, field: "seen", value: true)
         case .deleteAllPosts():
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
-            guard
-                let name = entity?.name
-                else { return }
-
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
-
-            do {
-
-                let posts = try context.fetch(fetchRequest) as? [NSManagedObject]
-                guard
-                    let post = posts?.first
-                    else { return }
-
-                post.setValue(false, forKey: "visible")
-                try context.save()
-
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
-
+            deleteAllPosts()
         case let .deletePost(postID):
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
-            guard
-                let name = entity?.name
-                else { return }
-
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
-            fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
-
-            do {
-
-                let posts = try context.fetch(fetchRequest) as? [NSManagedObject]
-                guard
-                    let post = posts?.first
-                    else { return }
-
-                post.setValue(false, forKey: "visible")
-                try context.save()
-
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
-
+            updatePost(postID: postID, field: "visible", value: false)
         default:
-            fatalError("Invalid endpoint used \(self)")
+            assertionFailure("Invalid endpoint used \(self)")
         }
     }
 
     func delete() {
         switch self {
         case .deleteAllPosts():
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
-            guard
-                let name = entity?.name
-                else { return }
-
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            do {
-                try context.execute(deleteRequest)
-                try context.save()
-            } catch {
-                print ("There was an error")
-            }
+            deleteAllPosts()
         case let .deletePost(postID):
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
-            guard
-                let name = entity?.name
-                else { return }
-
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
-            fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            do {
-                try context.execute(deleteRequest)
-                try context.save()
-            } catch {
-                print ("There was an error")
-            }
-
+            deletePost(postID: postID)
         default:
-            fatalError("Invalid endpoint used \(self)")
+            assertionFailure("Invalid endpoint used \(self)")
         }
     }
 
-    func convertToJSONArray(moArray: [NSManagedObject]) -> [[String : Any]] {
+    ///Transforms NSManagedObject into an Array of dictionaries for easier serialization
+    func convertToJSONArray(managedObjects: [NSManagedObject]) -> [[String : Any]] {
         var jsonArray: [[String: Any]] = []
-        for item in moArray {
+        for item in managedObjects {
             var dict: [String: Any] = [:]
             for attribute in item.entity.attributesByName {
                 if let value = item.value(forKey: attribute.key) {
@@ -194,5 +90,68 @@ enum DatabaseEndpoint: DatabaseRequest {
             jsonArray.append(dict)
         }
         return jsonArray
+    }
+}
+
+extension DatabaseEndpoint {
+    var context: NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer.viewContext
+    }
+
+    func deleteAllPosts() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PostEntity")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print ("There was an error")
+        }
+    }
+
+    func deletePost(postID: Int) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PostEntity")
+        fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
+
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print ("There was an error")
+        }
+    }
+
+    func updatePost(postID: Int, field: String, value: Any) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PostEntity")
+        fetchRequest.predicate = NSPredicate(format: "id = \(postID)")
+
+        do {
+
+            let posts = try context.fetch(fetchRequest) as? [NSManagedObject]
+
+            guard
+                let post = posts?.first
+                else { return }
+
+            post.setValue(value, forKey: field)
+            try context.save()
+
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+
+    func savePost(post: Post, seen: Bool) {
+        let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
+        let newPost = NSManagedObject(entity: entity!, insertInto: context)
+        newPost.setValue(post.id, forKey: "id")
+        newPost.setValue(post.title, forKey: "title")
+        newPost.setValue(post.userID, forKey: "userId")
+        newPost.setValue(post.body, forKey: "body")
+        newPost.setValue(seen, forKey: "seen")
+        newPost.setValue(true, forKey: "visible")
+        try? context.save()
     }
 }
