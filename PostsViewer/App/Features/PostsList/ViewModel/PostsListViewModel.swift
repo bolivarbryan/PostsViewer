@@ -42,13 +42,13 @@ class PostListViewModel {
             var groupedPosts = posts.filter { $0.seen == false }
             let seenPosts = posts.filter { $0.seen == true }
             groupedPosts.append(contentsOf: seenPosts)
-
             self.posts.value = groupedPosts
-
         }
     }
 
     func deleteAllPosts() {
-        posts.value = []
+        let database = DatabaseEndpoint.deleteAllPosts()
+        database.delete()
+        fetchPostsFromLocalDatabase()
     }
 }

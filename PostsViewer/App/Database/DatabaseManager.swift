@@ -54,7 +54,8 @@ enum DatabaseEndpoint: DatabaseRequest {
             } catch {
                 //Duplicated value, just ignoring it
             }
-        default: ()
+        default:
+            fatalError("Invalid endpoint used \(self)")
         }
     }
 
@@ -84,7 +85,31 @@ enum DatabaseEndpoint: DatabaseRequest {
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
-        default: ()
+        default:
+            fatalError("Invalid endpoint used \(self)")
+        }
+    }
+
+    func delete() {
+        switch self {
+        case .deleteAllPosts():
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            let entity = NSEntityDescription.entity(forEntityName: "PostEntity", in: context)
+            guard
+                let name = entity?.name
+                else { return }
+
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            do {
+                try context.execute(deleteRequest)
+                try context.save()
+            } catch {
+                print ("There was an error")
+            }
+        default:
+            fatalError("Invalid endpoint used \(self)")
         }
     }
 
