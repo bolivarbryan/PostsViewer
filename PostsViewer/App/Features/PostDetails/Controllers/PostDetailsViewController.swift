@@ -68,17 +68,23 @@ extension PostDetailsViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             let cellIdentifier = PostDescriptionTableViewCell.identifier
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! PostDescriptionTableViewCell
+            guard
+                let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PostDescriptionTableViewCell
+                else { fatalError("Cell Dequeue did fail") }
             cell.bodyLabel?.text = post?.body
             return cell
         case 1:
             let cellIdentifier = UserTableViewCell.identifier
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! UserTableViewCell
+            guard
+                let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? UserTableViewCell
+                else { fatalError("Cell Dequeue did fail") }
             cell.user = viewModel.currentUser
             return cell
         case 2:
             let cellIdentifier = CommentTableViewCell.identifier
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CommentTableViewCell
+            guard
+                let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CommentTableViewCell
+                else { fatalError("Cell Dequeue did fail") }
             cell.comment = viewModel.comments[indexPath.row]
             return cell
         default:
